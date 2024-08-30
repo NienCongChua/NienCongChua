@@ -1,278 +1,4 @@
-﻿//#include <iostream>
-//#include <fstream>
-//#include <string>
-//#include <assert.h>
-//
-//#include <GL/glew.h>
-//#include <GL/freeglut.h>
-//
-//#include <Vector_Matrix.h>
-//
-//
-//using namespace std;
-//
-//typedef struct
-//{
-//	float XYZW[4];
-//	float RGBA[4];
-//} Vertex;
-//
-//Vertex Vertices[] =
-//{
-//	// bottom
-//{ { -0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
-//{ { 0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
-//{ { -0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
-//
-//{ { 0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
-//{ { -0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
-//{ { 0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
-//
-//// right
-//{ { 0.0f,	 0.5f,	 0.0f,	1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
-//{ { 0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
-//{ { 0.5f,	-0.5f,  -0.5f,1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
-//
-//// left
-//{ { 0.0f,	 0.5f,	 0.0f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
-//{ { -0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
-//{ { -0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
-//
-//// front
-//{ { 0.0f,	 0.5f,	 0.0f,	1.0f },{ 1.0f,	1.0f,	1.0f,	1.0f } },
-//{ { -0.5f,	-0.5f,	 0.5f,	1.0f },{ 1.0f,	1.0f,	1.0f,	1.0f } },
-//{ { 0.5f,	-0.5f,	 0.5f,	1.0f },{ 1.0f,	1.0f,	1.0f,	1.0f } },
-//
-//// back
-//{ { 0.0f,	 0.5f,	 0.0f,	1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } },
-//{ { 0.5f,	-0.5f,  -0.5f,1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } },
-//{ { -0.5f,	-0.5f,  -0.5f,1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } }
-//
-//
-//};
-//
-//const size_t BufferSize = sizeof(Vertices);
-//const size_t VertexSize = sizeof(Vertices[0]);
-//const size_t RgbOffset = sizeof(Vertices[0].XYZW);
-//float R[3] = { 0.0f, 1.0f, 0.0f };
-//float T[3] = { 0.0f, 0.0f, 0.0f };
-//float Y[3] = { 0.0f, 0.0f, 1.0f };
-//
-//int 	CurrentWidth = 700,
-//CurrentHeight = 700;
-//
-//GLuint
-//VaoId,
-//VboId,
-//VertexShaderId,
-//FragmentShaderId,
-//ProgramId;
-//
-//mat4
-//view_mat_cpp,			//Ma trận view
-//projection_mat_cpp;		//Ma trận projection
-//// Biến truyền dữ liệu cho uniform
-//int
-//view_mat_location,
-//projection_mat_location;
-//
-//// ------------------------------------------
-//
-//// ------------------------------------------
-//string ReadShaderSourceFile(string fileName) {
-//	fstream reader(fileName.c_str());
-//	string line;
-//	string code = "";
-//	while (getline(reader, line)) {
-//		code += line + "\n";
-//	}
-//	reader.close();
-//	return code;
-//}
-//
-//// ------------------------------------------
-//void CreatVaoVbo()
-//{
-//	glGenVertexArrays(1, &VaoId);
-//	glBindVertexArray(VaoId);
-//
-//	glGenBuffers(1, &VboId);
-//	glBindBuffer(GL_ARRAY_BUFFER, VboId);
-//	glBufferData(GL_ARRAY_BUFFER, BufferSize, Vertices, GL_STATIC_DRAW);
-//
-//	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, VertexSize, 0);
-//	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, VertexSize, (GLvoid*)RgbOffset);
-//
-//	glEnableVertexAttribArray(0);
-//	glEnableVertexAttribArray(1);
-//}
-//// ------------------------------------------
-//void CreatShaders()
-//{
-//	string vertexSrc = ReadShaderSourceFile("./vs.shader");
-//	string fragmentSrc = ReadShaderSourceFile("./fs.shader");
-//
-//	const GLchar* VertexShader = vertexSrc.c_str();
-//	const GLchar* FragmentShader = fragmentSrc.c_str();
-//
-//	VertexShaderId = glCreateShader(GL_VERTEX_SHADER);
-//	glShaderSource(VertexShaderId, 1, &VertexShader, NULL);
-//	glCompileShader(VertexShaderId);
-//
-//	FragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
-//	glShaderSource(FragmentShaderId, 1, &FragmentShader, NULL);
-//	glCompileShader(FragmentShaderId);
-//
-//	ProgramId = glCreateProgram();
-//	glAttachShader(ProgramId, VertexShaderId);
-//	glAttachShader(ProgramId, FragmentShaderId);
-//	glLinkProgram(ProgramId);
-//	glUseProgram(ProgramId);
-//}
-//// ------------------------------------------
-//void CloseFunc()
-//{
-//	glUseProgram(0);
-//
-//	glDetachShader(ProgramId, VertexShaderId);
-//	glDetachShader(ProgramId, FragmentShaderId);
-//
-//	glDeleteShader(FragmentShaderId);
-//	glDeleteShader(VertexShaderId);
-//
-//	glDeleteProgram(ProgramId);
-//
-//	glDisableVertexAttribArray(1);
-//	glDisableVertexAttribArray(0);
-//
-//	glBindBuffer(GL_ARRAY_BUFFER, 0);
-//	glDeleteBuffers(1, &VboId);
-//
-//	glBindVertexArray(0);
-//	glDeleteVertexArrays(1, &VaoId);
-//}
-//// ------------------------------------------
-//
-//void DisplayFunc(void)
-//{
-//	// Các tham số của hàm lookat
-//	vec3	eye(R[0], R[1], R[2]),
-//		at(T[0], T[1], T[2]),
-//		up(Y[0], Y[1], Y[2]);
-//
-//	view_mat_cpp = lookat(eye, at, up);
-//	view_mat_location = glGetUniformLocation(ProgramId, "view_mat_shader");
-//	glUniformMatrix4fv(view_mat_location, 1, GL_FALSE, view_mat_cpp.m);
-//
-//	float
-//		znear = 1.0f,
-//		zfar = 100.0f,
-//		fov = 67.0f,
-//		aspect = (float)CurrentWidth / CurrentHeight;
-//
-//	// Tạo ma trận projection 
-//	projection_mat_cpp = perspective(fov, aspect, znear, zfar);
-//	projection_mat_location = glGetUniformLocation(ProgramId, "projection_mat_shader");
-//	glUniformMatrix4fv(projection_mat_location, 1, GL_FALSE, projection_mat_cpp.m);
-//
-//
-//	glEnable(GL_DEPTH_TEST);
-//	glDepthFunc(GL_LESS);
-//
-//	glClearColor(0.0, 0.0, 0.0, 0.0);
-//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//
-//	glDrawArrays(GL_TRIANGLES, 0, 18);
-//	glutSwapBuffers();
-//}
-//// ------------------------------------------
-//void ReshapeFunc(int Width, int Height)
-//{
-//	CurrentWidth = Width;
-//	CurrentHeight = Height;
-//
-//	//glViewport(0, 0, CurrentWidth, CurrentHeight);
-//}
-//// ------------------------------------------
-//void IdleFunc(void)
-//{
-//	glutPostRedisplay();
-//}
-//// ------------------------------------------
-//void KeyboardFunc(unsigned char key, int x, int y)
-//{
-//	switch (key) {
-//	case 27:
-//		exit(EXIT_SUCCESS); break;
-	//case 'z':
-	//	R[0] += 0.05f; break;
-	//case 'Z':
-	//	R[0] -= 0.05f; break;
-	//case 'x':
-	//	R[1] += 0.05f; break;
-	//case 'X':
-	//	R[1] -= 0.05f; break;
-	//case 'c':
-	//	R[2] += 0.05f; break;
-	//case 'C':
-	//	R[2] -= 0.05f; break;
-	//case 'a':
-	//	T[0] += 0.05f; break;
-	//case 'A':
-	//	T[0] -= 0.05f; break;
-	//case 's':
-	//	T[1] += 0.05f; break;
-	//case 'S':
-	//	T[1] -= 0.05f; break;
-	//case 'd':
-	//	T[2] += 0.05f; break;
-	//case 'D':
-	//	T[2] -= 0.05f; break;
-	//case 'q':
-	//	Y[0] += 0.05f; break;
-	//case 'Q':
-	//	Y[0] -= 0.05f; break;
-	//case 'w':
-	//	Y[1] += 0.05f; break;
-	//case 'W':
-	//	Y[1] -= 0.05f; break;
-	//case 'e':
-	//	Y[2] += 0.05f; break;
-	//case 'E':
-	//	Y[2] -= 0.05f; break;
-//	}
-//}
-//
-//// ------------------------------------------
-//int main(int argc, char* argv[])
-//{
-//	glutInit(&argc, argv);
-//	glutInitContextVersion(4, 0);
-//	glutInitContextFlags(GLUT_FORWARD_COMPATIBLE);
-//	glutInitContextProfile(GLUT_CORE_PROFILE);
-//	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
-//	glutInitWindowSize(CurrentWidth, CurrentHeight);
-//	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-//	glutCreateWindow("Lookat");
-//
-//	glewExperimental = GL_TRUE;
-//	glewInit();
-//
-//	CreatVaoVbo();
-//	CreatShaders();
-//
-//	glutDisplayFunc(DisplayFunc);
-//	glutReshapeFunc(ReshapeFunc);
-//	glutIdleFunc(IdleFunc);
-//	glutKeyboardFunc(KeyboardFunc);
-//	glutCloseFunc(CloseFunc);
-//
-//	glutMainLoop();
-//	return 0;
-//}
-
-
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <string>
 #include <assert.h>
@@ -291,47 +17,112 @@ typedef struct
 	float RGBA[4];
 } Vertex;
 
+//    v6----- v5
+//   /|      /|
+//  v1------v0|
+//  | |     | |
+//  | |v7---|-|v4
+//  |/      |/
+//  v2------v3
+
+// hehe
 Vertex Vertices[] =
 {
-	// bottom
-{ { -0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
-{ { 0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
-{ { -0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
+	// v0-v1-v2 (front)
+	{ { 0.5f,	 0.5f,	0.5f,	1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } },
+	{ { -0.5f,	 0.5f,	0.5f,	1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } },
+	{ { -0.5f,	-0.5f,	0.5f,	1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } },
+	// v2-v3-v0
+	{ { -0.5f,	-0.5f,	0.5f,	1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } },
+	{ { 0.5f,	-0.5f,	0.5f,	1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } },
+	{ { 0.5f,	 0.5f,	0.5f,	1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } },
 
-{ { 0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
-{ { -0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
-{ { 0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.5f,	0.5f,	0.5f,	1.0f } },
+	// v0-v3-v4 (right)
+	{ { 0.5f,	 0.5f,	 0.5f,	1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
+	{ { 0.5f,	-0.5f,   0.5f,1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
+	{ { 0.5f,	-0.5f,  -0.5f,1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
+	// v4-v5-v0
+	{ { 0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
+	{ { 0.5f,	 0.5f,	-0.5f,	1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
+	{ { 0.5f,	 0.5f,   0.5f,1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
 
-// right
-{ { 0.0f,	 0.5f,	 0.0f,	1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
-{ { 0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
-{ { 0.5f,	-0.5f,  -0.5f,1.0f },{ 0.0f,	1.0f,	0.0f,	1.0f } },
+	// v0-v5-v6 (top)
+	{ { 0.5f,	 0.5f,	 0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	{ { 0.5f,	0.5f,	-0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	{ { -0.5f,	0.5f,	 -0.5f,1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	// v6-v1-v0
+	{ { -0.5f,	 0.5f,	 -0.5f,1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	{ { -0.5f,	0.5f,	0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	{ { 0.5f,	0.5f,	 0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
 
-// left
-{ { 0.0f,	 0.5f,	 0.0f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
-{ { -0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
-{ { -0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	// v1-v6-v7 (left)
+	{ { -0.5f,	 0.5f,	 0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	{ { -0.5f,	0.5f,	-0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	{ { -0.5f,	-0.5f,	 -0.5f,1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	// v7-v2-v1
+	{ { -0.5f,	-0.5f,	 -0.5f,1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	{ { -0.5f,	-0.5f,	0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
+	{ { -0.5f,	0.5f,	 0.5f,	1.0f },{ 0.0f,	0.0f,	1.0f,	1.0f } },
 
-// front
-{ { 0.0f,	 0.5f,	 0.0f,	1.0f },{ 1.0f,	1.0f,	1.0f,	1.0f } },
-{ { -0.5f,	-0.5f,	 0.5f,	1.0f },{ 1.0f,	1.0f,	1.0f,	1.0f } },
-{ { 0.5f,	-0.5f,	 0.5f,	1.0f },{ 1.0f,	1.0f,	1.0f,	1.0f } },
+	// v7-v4-v3 (bottom)
+	{ { -0.5f,	-0.5f,	 -0.5f,1.0f },{ 0.1f,	0.2f,	0.3f,	1.0f } },
+	{ { 0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.1f,	0.2f,	0.3f,	1.0f } },
+	{ { 0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.1f,	0.2f,	0.3f,	1.0f } },
+	// v3-v2-v7
+	{ { 0.5f,	-0.5f,	 0.5f,	1.0f },{ 0.1f,	0.2f,	0.3f,	1.0f } },
+	{ { -0.5f,	-0.5f,	0.5f,	1.0f },{ 0.1f,	0.2f,	0.3f,	1.0f } },
+	{ { -0.5f,	-0.5f,	 -0.5f,1.0f },{ 0.1f,	0.2f,	0.3f,	1.0f } },
 
-// back
-{ { 0.0f,	 0.5f,	 0.0f,	1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } },
-{ { 0.5f,	-0.5f,  -0.5f,1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } },
-{ { -0.5f,	-0.5f,  -0.5f,1.0f },{ 1.0f,	0.0f,	0.0f,	1.0f } }
-
-
+	// v4-v7-v6 (back)
+	{ { 0.5f,	-0.5f,	 -0.5f,1.0f },{ 0.4f,	0.5f,	0.6f,	1.0f } },
+	{ { -0.5f,	-0.5f,	-0.5f,	1.0f },{ 0.4f,	0.5f,	0.6f,	1.0f } },
+	{ { -0.5f,	0.5f,	 -0.5f,1.0f },{ 0.4f,	0.5f,	0.6f,	1.0f } },
+	// v6-v5-v4
+	{ { -0.5f,	 0.5f,	 -0.5f,1.0f },{ 0.4f,	0.5f,	0.6f,	1.0f } },
+	{ { 0.5f,	0.5f,	 -0.5f,1.0f },{ 0.4f,	0.5f,	0.6f,	1.0f } },
+	{ { 0.5f,	-0.5f,	 -0.5f,1.0f },{ 0.4f,	0.5f,	0.6f,	1.0f } }
 };
 
 const size_t BufferSize = sizeof(Vertices);
 const size_t VertexSize = sizeof(Vertices[0]);
 const size_t RgbOffset = sizeof(Vertices[0].XYZW);
 
+// định nghĩa stack cho ma trận
+class MatrixStack {
+	int    index;
+	int    size;
+	mat4* matrices;
 
-int CurrentWidth = 700,
-CurrentHeight = 700;
+
+public:
+	MatrixStack(int numMatrices = 32) :index(0), size(numMatrices)
+	{
+		matrices = new mat4[numMatrices];
+	}
+
+	~MatrixStack()
+	{
+		delete[]matrices;
+	}
+
+	// phép toán đẩy vào
+	mat4& push(const mat4& m) {
+		assert(index + 1 < size);
+		matrices[index++] = m;
+		return matrices[index];
+	}
+
+	// phép toán lấy ra
+	mat4& pop(void) {
+		assert(index - 1 >= 0);
+		index--;
+		return matrices[index];
+	}
+};
+
+int
+CurrentWidth = 800,
+CurrentHeight = 600;
 
 GLuint
 VaoId,
@@ -340,20 +131,68 @@ VertexShaderId,
 FragmentShaderId,
 ProgramId;
 
+MatrixStack  mvstack;
 
-float R[3] = { 1.0f, 0.0f, 2.0f };
-float T[3] = { 0.0f, 0.0f, 0.0f };
-float Y[3] = { 0.0f, 1.0f, 0.0f };
+mat4  model_mat_cpp,
+projection_mat_cpp;
 
-
-mat4
-view_mat_cpp,			//Ma trận view
-projection_mat_cpp;		//Ma trận projection
-
-// Biến truyền dữ liệu cho uniform
-int
-view_mat_location,
+GLuint
+model_mat_location,
 projection_mat_location;
+
+float U = 0,
+	T = 0;
+
+void mat1()
+{
+	mvstack.push(model_mat_cpp);
+
+	mat4 instance = identity_mat4();
+	instance =
+		translate(vec3(0, 0, 0)) *
+		scale(vec3(1.0f, 2.0f, 0.5f));
+
+	mat4 model_left_upper_arm = model_mat_cpp * instance;
+
+	glUniformMatrix4fv(model_mat_location, 1, GL_FALSE, model_left_upper_arm.m);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	model_mat_cpp = mvstack.pop();
+}
+
+void mat2()
+{
+	mvstack.push(model_mat_cpp);
+
+	mat4 instance = identity_mat4();
+	instance =
+		translate(vec3(0, 0, 0)) *
+		scale(vec3(2.0f, 1.0f, 0.5f));
+
+	mat4 model_left_upper_arm = model_mat_cpp * instance;
+
+	glUniformMatrix4fv(model_mat_location, 1, GL_FALSE, model_left_upper_arm.m);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	model_mat_cpp = mvstack.pop();
+}
+
+void mat3() {
+	mvstack.push(model_mat_cpp);
+
+	mat4 instance = identity_mat4();
+	instance =
+		translate(vec3(0, 0, 0)) *
+		scale(vec3(0.5f, 1.0f, 1.0f));
+
+	mat4 model_left_upper_arm = model_mat_cpp * instance;
+
+	glUniformMatrix4fv(model_mat_location, 1, GL_FALSE, model_left_upper_arm.m);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	model_mat_cpp = mvstack.pop();
+}
+// ------------------------------------------
 
 // ------------------------------------------
 string ReadShaderSourceFile(string fileName) {
@@ -429,19 +268,16 @@ void CloseFunc()
 	glDeleteVertexArrays(1, &VaoId);
 }
 // ------------------------------------------
-
 void DisplayFunc(void)
 {
-	// Các tham số của hàm lookat
-	vec3	eye(R[0], R[1], R[2]),
-		at(T[0], T[1], T[2]),
-		up(Y[0], Y[1], Y[2]);
 
-	view_mat_cpp = lookat(eye, at, up);
-	view_mat_location = glGetUniformLocation(ProgramId, "view_mat_shader");
-	glUniformMatrix4fv(view_mat_location, 1, GL_FALSE, view_mat_cpp.m);
+	vec3	eye(2, 2, 3),
+		at(0, 0, 0),
+		up(0, 1, 0);
 
-	// Các tham số của phép chiếu perspective
+	model_mat_cpp = lookat(eye, at, up);
+	model_mat_location = glGetUniformLocation(ProgramId, "model_mat_shader");
+
 	float
 		znear = 1.0f,
 		zfar = 100.0f,
@@ -453,13 +289,45 @@ void DisplayFunc(void)
 	projection_mat_location = glGetUniformLocation(ProgramId, "projection_mat_shader");
 	glUniformMatrix4fv(projection_mat_location, 1, GL_FALSE, projection_mat_cpp.m);
 
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
 
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glDrawArrays(GL_TRIANGLES, 0, 18);
+	mvstack.push(model_mat_cpp);
+	model_mat_cpp = model_mat_cpp * translate(vec3(T, 0, 0));
+	mvstack.push(model_mat_cpp);
+	model_mat_cpp = model_mat_cpp * translate(vec3(T, 0, 0)) * translate(vec3(2, 0, 0)) * \
+		rotate_y(U) * translate(vec3(-2, 0, 0)) * translate(vec3(T, 0, 0));
+
+	mvstack.push(model_mat_cpp);
+	model_mat_cpp = model_mat_cpp * translate(vec3(-0.5, 0.5, 0.0));
+	mat1();
+	model_mat_cpp = mvstack.pop();
+
+	mvstack.push(model_mat_cpp);
+	model_mat_cpp = model_mat_cpp * rotate_x(180) * translate(vec3(1, -1, 0.0));
+	mat2();
+	model_mat_cpp = mvstack.pop();
+
+	mvstack.push(model_mat_cpp);
+	model_mat_cpp = model_mat_cpp * rotate_y(180) * translate(vec3(0, -1, 0.0));
+	mat2();
+	model_mat_cpp = mvstack.pop();
+
+	mvstack.push(model_mat_cpp);
+	model_mat_cpp = model_mat_cpp * translate(vec3(1.5, -0.5, 0.0));
+	mat1();
+	model_mat_cpp = mvstack.pop();
+
+	mvstack.push(model_mat_cpp);
+	model_mat_cpp = model_mat_cpp * rotate_x(90) * rotate_z(90) * translate(vec3(0, -0.5, 0));
+	mat3();
+	model_mat_cpp = mvstack.pop();
+
+	model_mat_cpp = mvstack.pop();
+	model_mat_cpp = mvstack.pop();
 	glutSwapBuffers();
 }
 // ------------------------------------------
@@ -469,6 +337,26 @@ void ReshapeFunc(int Width, int Height)
 	CurrentHeight = Height;
 
 	glViewport(0, 0, CurrentWidth, CurrentHeight);
+
+	float  left = -10.0, right = 10.0;
+	float  bottom = -5.0, top = 15.0;
+	float  zNear = -10.0, zFar = 10.0;
+
+	float aspect = float(CurrentWidth) / CurrentHeight;
+
+	if (aspect > 1.0) {
+		left *= aspect;
+		right *= aspect;
+	}
+	else {
+		bottom /= aspect;
+		top /= aspect;
+	}
+
+	mat4 projection = ortho(left, right, bottom, top, zNear, zFar);
+	glUniformMatrix4fv(projection_mat_location, 1, GL_FALSE, projection.m);
+
+	model_mat_cpp = identity_mat4();
 }
 // ------------------------------------------
 void IdleFunc(void)
@@ -476,50 +364,34 @@ void IdleFunc(void)
 	glutPostRedisplay();
 }
 // ------------------------------------------
+
 void KeyboardFunc(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 27:
 		exit(EXIT_SUCCESS); break;
-	case 'z':
-		R[0] += 0.05f; break;
-	case 'Z':
-		R[0] -= 0.05f; break;
-	case 'x':
-		R[1] += 0.05f; break;
-	case 'X':
-		R[1] -= 0.05f; break;
-	case 'c':
-		R[2] += 0.05f; break;
-	case 'C':
-		R[2] -= 0.05f; break;
-	case 'a':
-		T[0] += 0.05f; break;
-	case 'A':
-		T[0] -= 0.05f; break;
-	case 's':
-		T[1] += 0.05f; break;
-	case 'S':
-		T[1] -= 0.05f; break;
-	case 'd':
-		T[2] += 0.05f; break;
-	case 'D':
-		T[2] -= 0.05f; break;
+	case 't':
+	case 'T':
+		T += 0.3;
+		break;
+	case 'p':
+	case 'P':
+		T -= 0.3;
+		break;
 	case 'q':
-		Y[0] += 0.05f; break;
+		U += 5;
+		break;
 	case 'Q':
-		Y[0] -= 0.05f; break;
-	case 'w':
-		Y[1] += 0.05f; break;
-	case 'W':
-		Y[1] -= 0.05f; break;
-	case 'e':
-		Y[2] += 0.05f; break;
-	case 'E':
-		Y[2] -= 0.05f; break;
+		U -= 5;
+		break;
 	}
 }
-
+// ------------------------------------------
+void MouseFunc(int button, int state, int x, int y)
+{
+	glutPostRedisplay();
+}
+// ------------------------------------------
 // ------------------------------------------
 int main(int argc, char* argv[])
 {
@@ -530,7 +402,7 @@ int main(int argc, char* argv[])
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 	glutInitWindowSize(CurrentWidth, CurrentHeight);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutCreateWindow("Lookat-Perspective");
+	glutCreateWindow("Torso");
 
 	glewExperimental = GL_TRUE;
 	glewInit();
@@ -542,8 +414,11 @@ int main(int argc, char* argv[])
 	glutReshapeFunc(ReshapeFunc);
 	glutIdleFunc(IdleFunc);
 	glutKeyboardFunc(KeyboardFunc);
+	glutMouseFunc(MouseFunc);
 	glutCloseFunc(CloseFunc);
 
 	glutMainLoop();
 	return 0;
 }
+
+
